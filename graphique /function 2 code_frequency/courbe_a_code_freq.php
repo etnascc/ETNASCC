@@ -11,12 +11,12 @@ include ("../betav3.php");
 $parsed_json = json_decode(my_get_json("rate_limit?access_token=a6f162fe9dd5745cfaa1e387321b3ce59ede3a27"),true);
 	if ($parsed_json['rate']['remaining'] != 0)
 	{
-		$repos_orgarnization = my_get_repo("etnascc");
+		$repos_orgarnization = my_get_repo("melonJS");
 		//test
 		//var_dump($repos_orgarnization[$i]['full_name']);
-		$weeks = get_nbr_contrib($repos_orgarnization);
+		//get_nbr_contrib($repos_orgarnization);
 		//get_commit_activity($repos_orgarnization);
-		//get_code_frequency($repos_orgarnization);
+		$weeks = get_code_frequency($repos_orgarnization);
 		//get_punch_card($repos_orgarnization);
 		//get_participation($repos_orgarnization);
 	}
@@ -27,17 +27,17 @@ $parsed_json = json_decode(my_get_json("rate_limit?access_token=a6f162fe9dd5745c
 
 	$donnees = array(0 => 0);
  foreach ($weeks as $key => $value) {
- 	$donnees[] = $value['c'];
+ 	$donnees[] = $value['a'];
  }
-$largeur = 350;
-$hauteur = 300;
+$largeur = 5000;
+$hauteur = 1000;
 
 // Initialisation du graphique
 $graphe = new Graph($largeur, $hauteur);
 // Echelle lineaire ('lin') en ordonnee et pas de valeur en abscisse ('text')
 // Valeurs min et max seront determinees automatiquement
- $graphe->setScale("textlin");
-$graphe->xaxis->SetTickLabels(array('','','1'));
+$graphe->setScale("textlin");
+$graphe->xaxis->SetTickLabels(array('1'));
 
 // Creation de l'histogramme
 $histo = new BarPlot($donnees);
@@ -45,12 +45,12 @@ $histo = new BarPlot($donnees);
 $graphe->add($histo);
 
 // Creation de la courbe
-$courbe = new LinePlot($donnees);
+//$courbe = new LinePlot($donnees);
 // Ajout de la courbe au graphique
-$graphe->add($courbe);
+//$graphe->add($courbe);
 
 // Ajout du titre du graphique
-$graphe->title->set("Les Commits : ");
+$graphe->title->set("Les Ajouts : ");
 
 // Affichage du graphique
 $graphe->stroke();
